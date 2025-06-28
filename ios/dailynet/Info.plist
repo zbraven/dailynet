@@ -37,6 +37,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>This app needs access to health data to track your daily wellness metrics including steps, sleep, and weight.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>This app needs to update health data to sync your wellness information.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

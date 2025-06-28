@@ -58,13 +58,13 @@
   - **Acceptance Criteria**:
     - All records are displayed in a list with filters.
 
-## Phase 3: Health Data Integration & Advanced Features
-- [ ] Apple Health/Google Health Sync
+## Phase 3: Health Data Integration & Advanced Features ✅
+- [x] Apple Health/Google Health Sync
   - **Acceptance Criteria**:
     - With user permission, app reads steps, sleep, weight.
     - Health data is displayed in daily summaries.
 
-- [ ] Reminders & Notifications
+- [x] Reminders & Notifications
   - **Acceptance Criteria**:
     - App sends push notifications for mood, meal, finance logs.
     - Users can enable/disable notifications in settings.

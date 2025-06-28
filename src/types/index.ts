@@ -38,6 +38,28 @@ export interface FinancialCategory {
   created_at: string;
 }
 
+export interface HealthData {
+  id: string;
+  user_id: string;
+  data_type: 'steps' | 'sleep' | 'weight' | 'heart_rate' | 'calories_burned';
+  value: number;
+  unit: string;
+  recorded_at: string;
+  source: 'apple_health' | 'google_health' | 'manual';
+  created_at: string;
+}
+
+export interface NotificationSettings {
+  id: string;
+  user_id: string;
+  mood_reminders: boolean;
+  nutrition_reminders: boolean;
+  finance_reminders: boolean;
+  reminder_times: string[];
+  created_at: string;
+  updated_at: string;
+}
+
 export interface DailySummary {
   date: string;
   mood_average?: number;
@@ -46,4 +68,8 @@ export interface DailySummary {
   total_income: number;
   total_expenses: number;
   net_amount: number;
+  steps?: number;
+  sleep_hours?: number;
+  weight?: number;
+  calories_burned?: number;
 }

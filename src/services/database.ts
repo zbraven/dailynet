@@ -1,5 +1,5 @@
 import {supabase} from './supabase';
-import {MoodEntry, NutritionEntry, FinancialEntry, FinancialCategory, DailySummary} from '../types';
+import {MoodEntry, NutritionEntry, FinancialEntry, FinancialCategory, DailySummary, HealthData} from '../types';
 
 // Mood Services
 export const moodService = {
@@ -226,6 +226,13 @@ export const dashboardService = {
       .gte('created_at', `${targetDate}T00:00:00.000Z`)
       .lt('created_at', `${targetDate}T23:59:59.999Z`);
     
+    // Get health data
+    const {data: healthData} = await supabase
+      .from('health_data')
+      .select('data_type, value')
+      .gte('recorded_at', `${targetDate}T00:00:00.000Z`)
+      .lt('recorded_at', `${targetDate}T23:59:59.999Z`);
+    
     const mood_count = moodData?.length || 0;
     const mood_average = mood_count > 0 
       ? moodData!.reduce((sum, entry) => sum + entry.mood_level, 0) / mood_count 
@@ -239,6 +246,12 @@ export const dashboardService = {
     const total_expenses = financialData?.filter(entry => entry.type === 'expense')
       .reduce((sum, entry) => sum + entry.amount, 0) || 0;
     
+    // Extract health data
+    const steps = healthData?.find(h => h.data_type === 'steps')?.value;
+    const sleep_hours = healthData?.find(h => h.data_type === 'sleep')?.value;
+    const weight = healthData?.find(h => h.data_type === 'weight')?.value;
+    const calories_burned = healthData?.find(h => h.data_type === 'calories_burned')?.value;
+    
     return {
       date: targetDate,
       mood_average,
@@ -246,7 +259,11 @@ export const dashboardService = {
       total_calories,
       total_income,
       total_expenses,
-      net_amount: total_income - total_expenses
+      net_amount: total_income - total_expenses,
+      steps,
+      sleep_hours,
+      weight,
+      calories_burned,
     };
   }
 };

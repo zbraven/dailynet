@@ -12,6 +12,7 @@ import {useTheme} from '../contexts/ThemeContext';
 import {useLanguage} from '../contexts/LanguageContext';
 import {useAuth} from '../contexts/AuthContext';
 import {dashboardService} from '../services/database';
+import {healthService} from '../services/healthService';
 import {DailySummary} from '../types';
 
 const HomeScreen = () => {
@@ -23,6 +24,8 @@ const HomeScreen = () => {
 
   useEffect(() => {
     loadDailySummary();
+    // Auto-sync health data when home screen loads
+    syncHealthData();
   }, []);
 
   const loadDailySummary = async () => {
@@ -31,6 +34,16 @@ const HomeScreen = () => {
       setDailySummary(summary);
     } catch (error) {
       console.error('Error loading daily summary:', error);
+    }
+  };
+
+  const syncHealthData = async () => {
+    try {
+      await healthService.syncTodayData();
+      // Reload summary after health sync
+      await loadDailySummary();
+    } catch (error) {
+      console.error('Error syncing health data:', error);
     }
   };
 
@@ -206,6 +219,27 @@ const HomeScreen = () => {
                   {formatCurrency(dailySummary?.total_expenses || 0)}
                 </Text>
               </View>
+
+              {/* Health Data */}
+              {dailySummary?.steps && (
+                <View style={styles.summaryItem}>
+                  <Text style={styles.summaryIcon}>👟</Text>
+                  <Text style={styles.summaryLabel}>{t('health.steps')}</Text>
+                  <Text style={styles.summaryValue}>
+                    {Math.round(dailySummary.steps).toLocaleString()}
+                  </Text>
+                </View>
+              )}
+
+              {dailySummary?.sleep_hours && (
+                <View style={styles.summaryItem}>
+                  <Text style={styles.summaryIcon}>😴</Text>
+                  <Text style={styles.summaryLabel}>{t('health.sleep')}</Text>
+                  <Text style={styles.summaryValue}>
+                    {dailySummary.sleep_hours.toFixed(1)}h
+                  </Text>
+                </View>
+              )}
             </View>
           </View>
         </View>
@@ -231,7 +265,15 @@ const HomeScreen = () => {
               <Text style={styles.quickActionText}>{t('home.addTransaction')}</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.quickActionButton}>
+            <TouchableOpacity 
+              style={styles.quickActionButton}
+              onPress={() => navigation.navigate('Health' as never)}>
+              <Text style={styles.quickActionText}>{t('nav.health')}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.quickActionButton}
+              onPress={() => navigation.navigate('Settings' as never)}>
               <Text style={styles.quickActionText}>{t('nav.settings')}</Text>
             </TouchableOpacity>
           </View>

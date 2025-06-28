@@ -45,14 +45,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     try {
       // Configure Google Sign-In
       GoogleSignin.configure({
-        webClientId: 'YOUR_WEB_CLIENT_ID', // Replace with your actual web client ID
+        webClientId: 'YOUR_WEB_CLIENT_ID', // Replace with your actual web client ID from Google Cloud Console
         offlineAccess: true,
       });
 
-      // Check for existing session
-      const storedUser = await AsyncStorage.getItem('user');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+      // Check for existing Supabase session
+      const {data: {session}} = await supabase.auth.getSession();
+      
+      if (session?.user) {
+        const userData: User = {
+          id: session.user.id,
+          email: session.user.email || '',
+          name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || 'User',
+          provider: session.user.app_metadata?.provider === 'apple' ? 'apple' : 'google',
+        };
+        
+        await AsyncStorage.setItem('user', JSON.stringify(userData));
+        setUser(userData);
       }
     } catch (error) {
       console.error('Auth initialization error:', error);
@@ -67,13 +76,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       
-      const userData: User = {
-        id: userInfo.user.id,
-        email: userInfo.user.email,
-        name: userInfo.user.name || '',
-        provider: 'google',
-      };
-
       // Sign in to Supabase with Google token
       const {data, error} = await supabase.auth.signInWithIdToken({
         provider: 'google',
@@ -81,6 +83,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
       });
 
       if (error) throw error;
+
+      const userData: User = {
+        id: data.user.id,
+        email: data.user.email || '',
+        name: data.user.user_metadata?.full_name || userInfo.user.name || 'Google User',
+        provider: 'google',
+      };
 
       await AsyncStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
@@ -116,9 +125,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
       if (error) throw error;
 
       const userData: User = {
-        id: data.user?.id || '',
-        email: data.user?.email || '',
-        name: data.user?.user_metadata?.full_name || 'Apple User',
+        id: data.user.id,
+        email: data.user.email || '',
+        name: data.user.user_metadata?.full_name || 'Apple User',
         provider: 'apple',
       };
 

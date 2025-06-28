@@ -273,6 +273,12 @@ const HomeScreen = () => {
 
             <TouchableOpacity 
               style={styles.quickActionButton}
+              onPress={() => navigation.navigate('Analytics' as never)}>
+              <Text style={styles.quickActionText}>{t('home.viewAnalytics')}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.quickActionButton}
               onPress={() => navigation.navigate('Settings' as never)}>
               <Text style={styles.quickActionText}>{t('nav.settings')}</Text>
             </TouchableOpacity>

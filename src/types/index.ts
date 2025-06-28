@@ -73,3 +73,34 @@ export interface DailySummary {
   weight?: number;
   calories_burned?: number;
 }
+
+export type TimeRange = 'week' | 'month' | 'year';
+
+export interface TrendData {
+  date: string;
+  mood_average?: number;
+  total_calories?: number;
+  total_income?: number;
+  total_expenses?: number;
+  net_amount?: number;
+  steps?: number;
+  sleep_hours?: number;
+}
+
+export interface AnalyticsData {
+  timeRange: TimeRange;
+  startDate: string;
+  endDate: string;
+  summary: {
+    avgMood?: number;
+    avgCalories?: number;
+    totalIncome: number;
+    totalExpenses: number;
+    avgSteps?: number;
+    avgSleep?: number;
+  };
+  moodTrend: TrendData[];
+  nutritionTrend: TrendData[];
+  financeTrend: TrendData[];
+  healthTrend: TrendData[];
+}

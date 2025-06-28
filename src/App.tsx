@@ -15,6 +15,7 @@ import MoodScreen from './screens/MoodScreen';
 import NutritionScreen from './screens/NutritionScreen';
 import FinanceScreen from './screens/FinanceScreen';
 import HealthScreen from './screens/HealthScreen';
+import AnalyticsScreen from './screens/AnalyticsScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoadingScreen from './screens/LoadingScreen';
 
@@ -64,6 +65,7 @@ const AppNavigator = () => {
             <Stack.Screen name="Nutrition" component={NutritionScreen} />
             <Stack.Screen name="Finance" component={FinanceScreen} />
             <Stack.Screen name="Health" component={HealthScreen} />
+            <Stack.Screen name="Analytics" component={AnalyticsScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
           </>
         ) : (

@@ -69,11 +69,12 @@
     - App sends push notifications for mood, meal, finance logs.
     - Users can enable/disable notifications in settings.
 
-## Phase 4: Analytics, Export, & Premium
-- [ ] Trends & Summaries Dashboard
+## Phase 4: Analytics, Export, & Premium ✅
+- [x] Trends & Summaries Dashboard
   - **Acceptance Criteria**:
-    - Weekly/monthly graphs for mood, nutrition, finance, and health.
+    - Weekly/monthly/yearly graphs for mood, nutrition, finance, and health.
     - Stats are visually clear and easy to understand.
+    - Interactive charts with Victory Native.
 
 - [ ] CSV/PDF Export (Premium)
   - **Acceptance Criteria**:
@@ -91,11 +92,11 @@
     - UI follows minimalist design system.
     - Consistent padding, font sizes, and color palette.
 
-- [ ] Dark Mode Support
+- [x] Dark Mode Support
   - **Acceptance Criteria**:
     - Users can toggle between light and dark themes.
 
-- [ ] Settings Screen (Theme, Language, Notifications)
+- [x] Settings Screen (Theme, Language, Notifications)
   - **Acceptance Criteria**:
     - Users can change language, theme, and notification settings anytime.
 

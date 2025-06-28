@@ -17,6 +17,7 @@ const resources = {
       'nav.nutrition': 'Nutrition',
       'nav.finance': 'Finance',
       'nav.health': 'Health',
+      'nav.analytics': 'Analytics',
       'nav.settings': 'Settings',
       
       // Home
@@ -26,6 +27,7 @@ const resources = {
       'home.logMood': 'Log Mood',
       'home.addMeal': 'Add Meal',
       'home.addTransaction': 'Add Transaction',
+      'home.viewAnalytics': 'View Analytics',
       
       // Mood
       'mood.howAreYouFeeling': 'How are you feeling?',
@@ -87,6 +89,25 @@ const resources = {
       'health.weight': 'Weight',
       'health.caloriesBurned': 'Calories Burned',
       
+      // Analytics
+      'analytics.title': 'Analytics',
+      'analytics.week': 'Week',
+      'analytics.month': 'Month',
+      'analytics.year': 'Year',
+      'analytics.overview': 'Overview',
+      'analytics.avgMood': 'Avg Mood',
+      'analytics.avgCalories': 'Avg Calories',
+      'analytics.totalIncome': 'Total Income',
+      'analytics.totalExpenses': 'Total Expenses',
+      'analytics.avgSteps': 'Avg Steps',
+      'analytics.avgSleep': 'Avg Sleep',
+      'analytics.moodTrend': 'Mood Trend',
+      'analytics.caloriesTrend': 'Calories Trend',
+      'analytics.financeTrend': 'Finance Trend',
+      'analytics.stepsTrend': 'Steps Trend',
+      'analytics.noData': 'No data available for the selected time range',
+      'analytics.loadFailed': 'Failed to load analytics data',
+      
       // Settings
       'settings.title': 'Settings',
       'settings.appearance': 'Appearance',
@@ -134,6 +155,7 @@ const resources = {
       'nav.nutrition': 'Beslenme',
       'nav.finance': 'Finans',
       'nav.health': 'Sağlık',
+      'nav.analytics': 'Analitik',
       'nav.settings': 'Ayarlar',
       
       // Home
@@ -143,6 +165,7 @@ const resources = {
       'home.logMood': 'Ruh Hali Kaydet',
       'home.addMeal': 'Öğün Ekle',
       'home.addTransaction': 'İşlem Ekle',
+      'home.viewAnalytics': 'Analitikleri Görüntüle',
       
       // Mood
       'mood.howAreYouFeeling': 'Nasıl hissediyorsunuz?',
@@ -203,6 +226,25 @@ const resources = {
       'health.sleep': 'Uyku',
       'health.weight': 'Kilo',
       'health.caloriesBurned': 'Yakılan Kalori',
+      
+      // Analytics
+      'analytics.title': 'Analitik',
+      'analytics.week': 'Hafta',
+      'analytics.month': 'Ay',
+      'analytics.year': 'Yıl',
+      'analytics.overview': 'Genel Bakış',
+      'analytics.avgMood': 'Ort. Ruh Hali',
+      'analytics.avgCalories': 'Ort. Kalori',
+      'analytics.totalIncome': 'Toplam Gelir',
+      'analytics.totalExpenses': 'Toplam Gider',
+      'analytics.avgSteps': 'Ort. Adım',
+      'analytics.avgSleep': 'Ort. Uyku',
+      'analytics.moodTrend': 'Ruh Hali Trendi',
+      'analytics.caloriesTrend': 'Kalori Trendi',
+      'analytics.financeTrend': 'Finans Trendi',
+      'analytics.stepsTrend': 'Adım Trendi',
+      'analytics.noData': 'Seçilen zaman aralığı için veri bulunmuyor',
+      'analytics.loadFailed': 'Analitik verileri yüklenemedi',
       
       // Settings
       'settings.title': 'Ayarlar',

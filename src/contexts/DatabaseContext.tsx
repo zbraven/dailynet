@@ -46,7 +46,7 @@ export const DatabaseProvider: React.FC<DatabaseProviderProps> = ({children}) =>
             id: user?.id,
             email: user?.email,
             name: user?.name,
-            provider: user?.provider,
+            provider: 'google',
             created_at: new Date().toISOString(),
           });
 

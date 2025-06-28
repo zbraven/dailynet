@@ -7,9 +7,9 @@
 - [x] Set Up Multilanguage Support (TR/EN)
   - **Acceptance Criteria**: All static UI text can be toggled between Turkish and English.
 
-- [x] Implement Google & Apple Login (No Anonymous)
+- [x] Implement Google Login (No Anonymous)
   - **Acceptance Criteria**:
-    - Only Google or Apple sign-in is available.
+    - Only Google sign-in is available.
     - Users cannot access app without signing in.
     - Authentication tokens are securely stored.
 

@@ -6,7 +6,6 @@ import {
   StyleSheet,
   SafeAreaView,
   Alert,
-  Platform,
 } from 'react-native';
 import {useTheme} from '../contexts/ThemeContext';
 import {useLanguage} from '../contexts/LanguageContext';
@@ -15,7 +14,7 @@ import {useAuth} from '../contexts/AuthContext';
 const LoginScreen = () => {
   const {theme} = useTheme();
   const {t} = useLanguage();
-  const {signInWithGoogle, signInWithApple} = useAuth();
+  const {signInWithGoogle} = useAuth();
   const [loading, setLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {
@@ -24,17 +23,6 @@ const LoginScreen = () => {
       await signInWithGoogle();
     } catch (error) {
       Alert.alert(t('common.error'), 'Google sign-in failed. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAppleSignIn = async () => {
-    try {
-      setLoading(true);
-      await signInWithApple();
-    } catch (error) {
-      Alert.alert(t('common.error'), 'Apple sign-in failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -73,9 +61,6 @@ const LoginScreen = () => {
       alignItems: 'center',
       marginBottom: theme.spacing.md,
     },
-    buttonApple: {
-      backgroundColor: Platform.OS === 'ios' ? '#000000' : theme.colors.secondary,
-    },
     buttonText: {
       fontSize: theme.typography.body.fontSize,
       fontWeight: '600',
@@ -98,15 +83,6 @@ const LoginScreen = () => {
           disabled={loading}>
           <Text style={styles.buttonText}>{t('auth.signInWithGoogle')}</Text>
         </TouchableOpacity>
-
-        {Platform.OS === 'ios' && (
-          <TouchableOpacity
-            style={[styles.button, styles.buttonApple, loading && styles.buttonDisabled]}
-            onPress={handleAppleSignIn}
-            disabled={loading}>
-            <Text style={styles.buttonText}>{t('auth.signInWithApple')}</Text>
-          </TouchableOpacity>
-        )}
       </View>
     </SafeAreaView>
   );

@@ -1,21 +1,19 @@
 import React, {createContext, useContext, useEffect, useState, ReactNode} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {appleAuth} from '@invertase/react-native-apple-authentication';
 import {supabase} from '../services/supabase';
 
 interface User {
   id: string;
   email: string;
   name: string;
-  provider: 'google' | 'apple';
+  provider: 'google';
 }
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
-  signInWithApple: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -57,7 +55,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
           id: session.user.id,
           email: session.user.email || '',
           name: session.user.user_metadata?.full_name || session.user.user_metadata?.name || 'User',
-          provider: session.user.app_metadata?.provider === 'apple' ? 'apple' : 'google',
+          provider: 'google',
         };
         
         await AsyncStorage.setItem('user', JSON.stringify(userData));
@@ -101,54 +99,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     }
   };
 
-  const signInWithApple = async () => {
-    try {
-      setLoading(true);
-      const appleAuthRequestResponse = await appleAuth.performRequest({
-        requestedOperation: appleAuth.Operation.LOGIN,
-        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
-      });
-
-      const {identityToken, nonce} = appleAuthRequestResponse;
-
-      if (!identityToken) {
-        throw new Error('Apple sign-in failed - no identity token');
-      }
-
-      // Sign in to Supabase with Apple token
-      const {data, error} = await supabase.auth.signInWithIdToken({
-        provider: 'apple',
-        token: identityToken,
-        nonce,
-      });
-
-      if (error) throw error;
-
-      const userData: User = {
-        id: data.user.id,
-        email: data.user.email || '',
-        name: data.user.user_metadata?.full_name || 'Apple User',
-        provider: 'apple',
-      };
-
-      await AsyncStorage.setItem('user', JSON.stringify(userData));
-      setUser(userData);
-    } catch (error) {
-      console.error('Apple sign-in error:', error);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const signOut = async () => {
     try {
       setLoading(true);
       
-      // Sign out from providers
-      if (user?.provider === 'google') {
-        await GoogleSignin.signOut();
-      }
+      // Sign out from Google
+      await GoogleSignin.signOut();
       
       // Sign out from Supabase
       await supabase.auth.signOut();
@@ -167,7 +123,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     user,
     loading,
     signInWithGoogle,
-    signInWithApple,
     signOut,
   };
 

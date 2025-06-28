@@ -11,6 +11,9 @@ import {DatabaseProvider} from './contexts/DatabaseContext';
 
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
+import MoodScreen from './screens/MoodScreen';
+import NutritionScreen from './screens/NutritionScreen';
+import FinanceScreen from './screens/FinanceScreen';
 import LoadingScreen from './screens/LoadingScreen';
 
 const Stack = createStackNavigator();
@@ -26,7 +29,12 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {user ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Mood" component={MoodScreen} />
+            <Stack.Screen name="Nutrition" component={NutritionScreen} />
+            <Stack.Screen name="Finance" component={FinanceScreen} />
+          </>
         ) : (
           <Stack.Screen name="Login" component={LoginScreen} />
         )}

@@ -1,6 +1,6 @@
 # Daily Net — TODO Checklist
 
-## Phase 1: Foundation & Authentication
+## Phase 1: Foundation & Authentication ✅
 - [x] Initialize React Native Project
   - **Acceptance Criteria**: Project builds and runs on iOS & Android simulators.
 
@@ -18,43 +18,43 @@
     - User data is saved and retrieved from the cloud.
     - Sync works across devices.
 
-## Phase 2: Core Tracking Features
+## Phase 2: Core Tracking Features ✅
 
-### 2.1 Mood Tracking
-- [ ] Mood Entry (1-10 Emoji Scale)
+### 2.1 Mood Tracking ✅
+- [x] Mood Entry (1-10 Emoji Scale)
   - **Acceptance Criteria**:
     - Users can select from 10 emoji mood options (1-10).
     - Each entry is timestamped.
     - Unlimited entries per day.
 
-### 2.2 Nutrition Tracking
-- [ ] Meal Type Selection (Breakfast, Lunch, Dinner, Snacks)
+### 2.2 Nutrition Tracking ✅
+- [x] Meal Type Selection (Breakfast, Lunch, Dinner, Snacks)
   - **Acceptance Criteria**:
     - Users select meal type when adding entry.
 
-- [ ] Food Database Picker & Search
+- [x] Food Database Picker & Search
   - **Acceptance Criteria**:
     - Users select foods from searchable database.
     - Foods display nutrition info (calories, protein, fat, carbs).
 
-- [ ] Automatic Nutrition Calculation
+- [x] Automatic Nutrition Calculation
   - **Acceptance Criteria**:
     - Selected foods auto-calculate and display nutrition totals for each meal.
 
-- [ ] Edit/Delete Meal Entries
+- [x] Edit/Delete Meal Entries
   - **Acceptance Criteria**:
     - Users can edit or delete existing meals.
 
-### 2.3 Financial Tracking
-- [ ] Manual Income/Expense Entry
+### 2.3 Financial Tracking ✅
+- [x] Manual Income/Expense Entry
   - **Acceptance Criteria**:
     - Unlimited income/expense entries can be added with amount, description, and category.
 
-- [ ] Custom Categories for Transactions
+- [x] Custom Categories for Transactions
   - **Acceptance Criteria**:
     - Users can create or edit expense/income categories.
 
-- [ ] List & Review Transactions
+- [x] List & Review Transactions
   - **Acceptance Criteria**:
     - All records are displayed in a list with filters.
 

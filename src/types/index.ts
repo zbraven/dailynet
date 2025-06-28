@@ -104,3 +104,24 @@ export interface AnalyticsData {
   financeTrend: TrendData[];
   healthTrend: TrendData[];
 }
+
+export interface Subscription {
+  id: string;
+  user_id: string;
+  plan: 'free' | 'premium';
+  status: 'active' | 'inactive' | 'cancelled';
+  started_at: string;
+  expires_at?: string;
+  created_at: string;
+}
+
+export interface ExportOptions {
+  format: 'csv' | 'pdf';
+  timeRange: TimeRange;
+  includeData: {
+    mood: boolean;
+    nutrition: boolean;
+    finance: boolean;
+    health: boolean;
+  };
+}

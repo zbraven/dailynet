@@ -10,24 +10,34 @@ import {
   Alert,
 } from 'react-native';
 import {VictoryChart, VictoryLine, VictoryArea, VictoryAxis, VictoryBar, VictoryTheme} from 'victory-native';
+import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../contexts/ThemeContext';
 import {useLanguage} from '../contexts/LanguageContext';
 import {analyticsService} from '../services/analytics';
+import {subscriptionService} from '../services/subscriptionService';
 import {AnalyticsData, TimeRange} from '../types';
 
 const {width: screenWidth} = Dimensions.get('window');
 const chartWidth = screenWidth - 32;
 
 const AnalyticsScreen = () => {
+  const navigation = useNavigation();
   const {theme} = useTheme();
   const {t} = useLanguage();
   const [timeRange, setTimeRange] = useState<TimeRange>('week');
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
 
   useEffect(() => {
+    checkPremiumStatus();
     loadAnalytics();
   }, [timeRange]);
+
+  const checkPremiumStatus = async () => {
+    const premium = await subscriptionService.isPremiumUser();
+    setIsPremium(premium);
+  };
 
   const loadAnalytics = async () => {
     try {
@@ -40,6 +50,21 @@ const AnalyticsScreen = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleExportPress = () => {
+    if (!isPremium) {
+      Alert.alert(
+        t('premium.premiumRequired'),
+        t('premium.exportRequiresPremium'),
+        [
+          {text: t('common.cancel'), style: 'cancel'},
+          {text: t('premium.upgradeToPremium'), onPress: () => navigation.navigate('Premium' as never)},
+        ]
+      );
+      return;
+    }
+    navigation.navigate('Export' as never);
   };
 
   const formatCurrency = (amount: number) => {
@@ -79,11 +104,25 @@ const AnalyticsScreen = () => {
       paddingVertical: theme.spacing.md,
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.border,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     title: {
       fontSize: theme.typography.h2.fontSize,
       fontWeight: theme.typography.h2.fontWeight as any,
       color: theme.colors.text,
+    },
+    exportButton: {
+      backgroundColor: theme.colors.primary,
+      paddingHorizontal: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
+      borderRadius: 6,
+    },
+    exportButtonText: {
+      color: '#FFFFFF',
+      fontSize: theme.typography.caption.fontSize,
+      fontWeight: '600',
     },
     content: {
       flex: 1,
@@ -191,6 +230,35 @@ const AnalyticsScreen = () => {
       color: theme.colors.textSecondary,
       textAlign: 'center',
     },
+    premiumOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0,0.7)',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 12,
+    },
+    premiumText: {
+      color: '#FFFFFF',
+      fontSize: theme.typography.body.fontSize,
+      fontWeight: '600',
+      textAlign: 'center',
+      marginBottom: theme.spacing.md,
+    },
+    upgradeButton: {
+      backgroundColor: theme.colors.primary,
+      paddingHorizontal: theme.spacing.lg,
+      paddingVertical: theme.spacing.sm,
+      borderRadius: 6,
+    },
+    upgradeButtonText: {
+      color: '#FFFFFF',
+      fontSize: theme.typography.body.fontSize,
+      fontWeight: '600',
+    },
   });
 
   const timeRanges: {key: TimeRange; label: string}[] = [
@@ -229,6 +297,9 @@ const AnalyticsScreen = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{t('analytics.title')}</Text>
+        <TouchableOpacity style={styles.exportButton} onPress={handleExportPress}>
+          <Text style={styles.exportButtonText}>{t('export.exportData')}</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.timeRangeContainer}>
@@ -357,6 +428,14 @@ const AnalyticsScreen = () => {
                   }}
                 />
               </VictoryChart>
+              {!isPremium && (
+                <View style={styles.premiumOverlay}>
+                  <Text style={styles.premiumText}>{t('premium.premiumRequired')}</Text>
+                  <TouchableOpacity style={styles.upgradeButton} onPress={() => navigation.navigate('Premium' as never)}>
+                    <Text style={styles.upgradeButtonText}>{t('premium.upgradeToPremium')}</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           </View>
         )}
@@ -383,6 +462,14 @@ const AnalyticsScreen = () => {
                   }}
                 />
               </VictoryChart>
+              {!isPremium && (
+                <View style={styles.premiumOverlay}>
+                  <Text style={styles.premiumText}>{t('premium.premiumRequired')}</Text>
+                  <TouchableOpacity style={styles.upgradeButton} onPress={() => navigation.navigate('Premium' as never)}>
+                    <Text style={styles.upgradeButtonText}>{t('premium.upgradeToPremium')}</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           </View>
         )}
@@ -409,6 +496,14 @@ const AnalyticsScreen = () => {
                   }}
                 />
               </VictoryChart>
+              {!isPremium && (
+                <View style={styles.premiumOverlay}>
+                  <Text style={styles.premiumText}>{t('premium.premiumRequired')}</Text>
+                  <TouchableOpacity style={styles.upgradeButton} onPress={() => navigation.navigate('Premium' as never)}>
+                    <Text style={styles.upgradeButtonText}>{t('premium.upgradeToPremium')}</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           </View>
         )}

@@ -16,11 +16,14 @@ import NutritionScreen from './screens/NutritionScreen';
 import FinanceScreen from './screens/FinanceScreen';
 import HealthScreen from './screens/HealthScreen';
 import AnalyticsScreen from './screens/AnalyticsScreen';
+import PremiumScreen from './screens/PremiumScreen';
+import ExportScreen from './screens/ExportScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import LoadingScreen from './screens/LoadingScreen';
 
 import {notificationService} from './services/notificationService';
 import {healthService} from './services/healthService';
+import {subscriptionService} from './services/subscriptionService';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +49,9 @@ const AppNavigator = () => {
       
       // Initialize health service
       await healthService.initialize();
+      
+      // Initialize subscription service
+      await subscriptionService.initialize();
     } catch (error) {
       console.error('Error initializing services:', error);
     }
@@ -66,6 +72,8 @@ const AppNavigator = () => {
             <Stack.Screen name="Finance" component={FinanceScreen} />
             <Stack.Screen name="Health" component={HealthScreen} />
             <Stack.Screen name="Analytics" component={AnalyticsScreen} />
+            <Stack.Screen name="Premium" component={PremiumScreen} />
+            <Stack.Screen name="Export" component={ExportScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
           </>
         ) : (
